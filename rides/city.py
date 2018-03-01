@@ -89,5 +89,9 @@ class City:
         ride_score = ride.get_ride_points() + bonus
         return ride_score
 
-    def get_output(self):
-        return self.output
+    def get_output(self) -> str:
+        return self.output[:-1]
+
+    def save_output(self, file: str):
+        with open(file.replace("inputs", "outputs").replace(".in", ".out"), 'wb') as f:
+            f.write(self.get_output().encode())

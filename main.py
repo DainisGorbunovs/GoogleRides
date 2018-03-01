@@ -11,5 +11,6 @@ city.assign_rides_to_vehicles()
 print("Basic simulation has a score of {}.".format(city.get_score()))
 
 print(city.get_output())
+city.save_output(sys.argv[1])
 
 print("Done")
