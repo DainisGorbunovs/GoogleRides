@@ -1,4 +1,5 @@
 from rides import Ride, Vehicle
+import random
 
 
 class City:
@@ -49,7 +50,7 @@ class City:
         return self.score
 
     def assign_rides_to_vehicles(self):
-        while len(self.rides) > 0:
+        while len(self.rides) > 0 and len(self.vehicles) > 0:
             for vehicle in self.vehicles:
                 self.assign_nearest_ride_to_vehicle(vehicle)
                 ride = vehicle.get_ride()
@@ -58,18 +59,18 @@ class City:
                 if vehicle.get_step() < ride.get_earliest_start():
                     vehicle.set_step(ride.get_earliest_start())
 
-                ride_score = self.get_ride_score(vehicle.get_ride(), 0, ride.get_path_distance())
+                # ride_score = self.get_ride_score(vehicle.get_ride(), 0, ride.get_path_distance())
                 vehicle.set_position((ride.get_row_finish(), ride.get_column_finish()))
                 vehicle.set_step(vehicle.get_step() + ride.get_path_distance())
 
                 if vehicle.get_step() >= self.get_step_count():
                     self.output += str(len(vehicle.ride_ids)) + ' ' + ' '.join([str(i) for i in vehicle.ride_ids]) + '\n'
                     self.vehicles.remove(vehicle)
-                self.score += ride_score
+                # self.score += ride_score
 
                 if len(self.rides) <= 0:
-                    for vehicle in self.vehicles:
-                        self.output += str(len(vehicle.ride_ids)) + ' ' + ' '.join([str(i) for i in vehicle.ride_ids]) + '\n'
+                    for vehicle2 in self.vehicles:
+                        self.output += str(len(vehicle2.ride_ids)) + ' ' + ' '.join([str(i) for i in vehicle2.ride_ids]) + '\n'
                     return
 
     def assign_nearest_ride_to_vehicle(self, vehicle: Vehicle):
@@ -83,6 +84,7 @@ class City:
 
         vehicle.set_ride(nearest_ride)
         self.rides.remove(nearest_ride)
+        print("{} rides left".format(len(self.rides)))
 
     def get_ride_score(self, ride: Ride, actual_start_time: int, actual_finish_time: int):
         bonus = self.get_ride_bonus() if ride.award_bonus(actual_start_time, actual_finish_time) else 0
@@ -95,3 +97,8 @@ class City:
     def save_output(self, file: str):
         with open(file.replace("inputs", "outputs").replace(".in", ".out"), 'wb') as f:
             f.write(self.get_output().encode())
+
+    def get_city_info(self) -> str:
+        return '{} map, {} vehicles, {} rides, {} bonus and {} steps'.format(
+            (self.get_row_count(), self.get_column_count()), self.vehicle_count,
+            self.ride_count, self.ride_bonus, self.step_count)
