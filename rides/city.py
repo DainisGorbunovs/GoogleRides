@@ -3,6 +3,7 @@ from rides import Ride, Vehicle
 
 class City:
     def __init__(self, file: str):
+        self.score = 0
         self.rides = []
         self.vehicles = []
 
@@ -43,8 +44,43 @@ class City:
         for vehicle in range(self.get_vehicle_count()):
             self.vehicles.append(Vehicle())
 
-    def next_ride(self):
-        pass
+    def get_score(self) -> int:
+        return self.score
 
-    def find_score(self):
-        pass
+    def assign_rides_to_vehicles(self):
+        while len(self.rides) > 0:
+            for vehicle in self.vehicles:
+                self.assign_nearest_ride_to_vehicle(vehicle)
+                ride = vehicle.get_ride()
+
+                # if arrives early, then need to wait
+                if vehicle.get_step() < ride.get_earliest_start():
+                    vehicle.set_step(ride.get_earliest_start())
+
+                ride_score = self.get_ride_score(vehicle.get_ride(), 0, ride.get_path_distance())
+                vehicle.set_position((ride.get_row_finish(), ride.get_column_finish()))
+                vehicle.set_step(vehicle.get_step() + ride.get_path_distance())
+
+                if vehicle.get_step() >= self.get_step_count():
+                    self.vehicles.remove(vehicle)
+                self.score += ride_score
+
+                if len(self.rides) <= 0:
+                    return
+
+    def assign_nearest_ride_to_vehicle(self, vehicle: Vehicle):
+        nearest_ride = None
+        shortest_distance = None
+        for ride in self.rides:
+            distance_to_ride = vehicle.get_distance_to_ride_start(ride)
+            if shortest_distance is None or distance_to_ride < shortest_distance:
+                shortest_distance = distance_to_ride
+                nearest_ride = ride
+
+        vehicle.set_ride(nearest_ride)
+        self.rides.remove(nearest_ride)
+
+    def get_ride_score(self, ride: Ride, actual_start_time: int, actual_finish_time: int):
+        bonus = self.get_ride_bonus() if ride.award_bonus(actual_start_time, actual_finish_time) else 0
+        ride_score = ride.get_ride_points() + bonus
+        return ride_score

@@ -7,7 +7,8 @@ if len(sys.argv) < 2:
 
 city = City(sys.argv[1])
 print("Parsed {} rides from {} input file.".format(city.get_ride_count(), sys.argv[1]))
-rides = city.get_rides()
+city.assign_rides_to_vehicles()
+print("Basic simulation has a score of {}.".format(city.get_score()))
 
 
 print("Done")

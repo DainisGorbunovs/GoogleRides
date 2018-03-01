@@ -32,7 +32,7 @@ class Ride:
         # an alias to get_path_distance
         return self.get_path_distance()
 
-    def award_bonus(self, actual_start_time, actual_end_time) -> bool:
+    def award_bonus(self, actual_start_time: int, actual_end_time: int) -> bool:
         # award bonus if picked up passenger on time (or before and waited)
         # AND arrived at the destination before or on time
         return actual_start_time <= self.get_earliest_start() and actual_end_time <= self.get_latest_finish()
