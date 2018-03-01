@@ -4,8 +4,8 @@ class Ride:
         self.row_start, self.col_start, self.row_fin, self.col_fin, self.early_start, self.late_fin = int_line
 
         # use Manhattan distance
-        self.path_distance = (self.get_row_finish() - self.get_row_start()) \
-            + (self.get_column_finish() - self.get_column_start())
+        self.path_distance = abs(self.get_row_finish() - self.get_row_start()) \
+            + abs(self.get_column_finish() - self.get_column_start())
 
     def get_row_start(self):
         return self.row_start
@@ -27,3 +27,7 @@ class Ride:
 
     def get_path_distance(self):
         return self.path_distance
+
+    def get_ride_points(self):
+        # an alias to get_path_distance
+        return self.get_path_distance()

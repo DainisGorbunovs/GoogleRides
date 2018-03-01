@@ -32,3 +32,9 @@ class City:
 
     def get_rides(self):
         return self.rides
+
+    def next_ride(self):
+        pass
+
+    def find_score(self):
+        pass
