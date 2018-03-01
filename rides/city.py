@@ -11,7 +11,7 @@ class City:
     def get_row_count(self):
         return self.row_count
 
-    def get_col_count(self):
+    def get_column_count(self):
         return self.col_count
 
     def get_vehicle_count(self):
@@ -29,3 +29,6 @@ class City:
     def add_rides_from_file(self, f):
         for line in f:
             self.rides.append(Ride(line.decode()))
+
+    def get_rides(self):
+        return self.rides

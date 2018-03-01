@@ -10,3 +10,8 @@ with open(sys.argv[1], 'rb') as f:
     city.add_rides_from_file(f)
 
 print("Parsed {} rides from {} input file.".format(city.get_ride_count(), sys.argv[1]))
+
+rides = city.get_rides()
+
+
+print("Done")
