@@ -7,7 +7,7 @@ class Vehicle:
         self.current_ride = current_ride
         self.current_step = current_step
 
-    def get_ride(self):
+    def get_ride(self) -> Ride:
         return self.current_ride
 
     def set_ride(self, ride: Ride):
@@ -16,6 +16,6 @@ class Vehicle:
     def set_position(self, position: tuple):
         self.row_position, self.col_position = position
 
-    def get_position(self):
+    def get_position(self) -> tuple:
         return self.row_position, self.col_position
 

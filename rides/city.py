@@ -14,29 +14,29 @@ class City:
 
         self.add_vehicles()
 
-    def get_row_count(self):
+    def get_row_count(self) -> int:
         return self.row_count
 
-    def get_column_count(self):
+    def get_column_count(self) -> int:
         return self.col_count
 
-    def get_vehicle_count(self):
+    def get_vehicle_count(self) -> int:
         return self.vehicle_count
 
-    def get_ride_count(self):
+    def get_ride_count(self) -> int:
         return self.ride_count
 
-    def get_ride_bonus(self):
+    def get_ride_bonus(self) -> int:
         return self.ride_bonus
 
-    def get_step_count(self):
+    def get_step_count(self) -> int:
         return self.step_count
 
     def add_rides_from_file(self, f):
         for line in f:
             self.rides.append(Ride(line.decode()))
 
-    def get_rides(self):
+    def get_rides(self) -> list:
         return self.rides
 
     def add_vehicles(self):
