@@ -6,12 +6,14 @@ class Vehicle:
         self.row_position, self.col_position = position
         self.current_ride = current_ride
         self.current_step = current_step
+        self.ride_ids = []
 
     def get_ride(self) -> Ride:
         return self.current_ride
 
     def set_ride(self, ride: Ride):
         self.current_ride = ride
+        self.ride_ids.append(ride.get_ride_id())
 
     def get_step(self) -> int:
         return self.current_step

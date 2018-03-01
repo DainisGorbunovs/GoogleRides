@@ -10,5 +10,6 @@ print("Parsed {} rides from {} input file.".format(city.get_ride_count(), sys.ar
 city.assign_rides_to_vehicles()
 print("Basic simulation has a score of {}.".format(city.get_score()))
 
+print(city.get_output())
 
 print("Done")

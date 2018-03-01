@@ -14,6 +14,7 @@ class City:
             self.add_rides_from_file(f)
 
         self.add_vehicles()
+        self.output = ''
 
     def get_row_count(self) -> int:
         return self.row_count
@@ -35,7 +36,7 @@ class City:
 
     def add_rides_from_file(self, f):
         for line in f:
-            self.rides.append(Ride(line.decode()))
+            self.rides.append(Ride(line.decode(), len(self.rides)))
 
     def get_rides(self) -> list:
         return self.rides
@@ -62,10 +63,13 @@ class City:
                 vehicle.set_step(vehicle.get_step() + ride.get_path_distance())
 
                 if vehicle.get_step() >= self.get_step_count():
+                    self.output += str(len(vehicle.ride_ids)) + ' ' + ' '.join([str(i) for i in vehicle.ride_ids]) + '\n'
                     self.vehicles.remove(vehicle)
                 self.score += ride_score
 
                 if len(self.rides) <= 0:
+                    for vehicle in self.vehicles:
+                        self.output += str(len(vehicle.ride_ids)) + ' ' + ' '.join([str(i) for i in vehicle.ride_ids]) + '\n'
                     return
 
     def assign_nearest_ride_to_vehicle(self, vehicle: Vehicle):
@@ -84,3 +88,6 @@ class City:
         bonus = self.get_ride_bonus() if ride.award_bonus(actual_start_time, actual_finish_time) else 0
         ride_score = ride.get_ride_points() + bonus
         return ride_score
+
+    def get_output(self):
+        return self.output
