@@ -1,12 +1,18 @@
-from rides import Ride
+from rides import Ride, Vehicle
 
 
 class City:
-    def __init__(self, line: str):
-        self.row_count, self.col_count, self.vehicle_count,\
-            self.ride_count, self.ride_bonus, self.step_count = [int(i) for i in line.split()]
-
+    def __init__(self, file: str):
         self.rides = []
+        self.vehicles = []
+
+        with open(file, 'rb') as f:
+            self.row_count, self.col_count, self.vehicle_count, \
+                self.ride_count, self.ride_bonus, self.step_count\
+                = [int(i) for i in f.readline().split()]
+            self.add_rides_from_file(f)
+
+        self.add_vehicles()
 
     def get_row_count(self):
         return self.row_count
@@ -32,6 +38,10 @@ class City:
 
     def get_rides(self):
         return self.rides
+
+    def add_vehicles(self):
+        for vehicle in range(self.get_vehicle_count()):
+            self.vehicles.append(Vehicle())
 
     def next_ride(self):
         pass
